@@ -1,0 +1,6 @@
+PINYIN_ID_VOID_should_be_char.diff
+enable-static.diff
+no-download-db.diff
+0004-.py-use-python3-explicitly-and-migrate-with-2to3.patch
+0005-More-tweaks-of-data-db-android-create_db.py.patch
+0006-Add-utf-16-encoding-when-opening-the-phrase-file.patch

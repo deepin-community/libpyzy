@@ -1,0 +1,12 @@
+Index: libpyzy/configure.ac
+===================================================================
+--- libpyzy.orig/configure.ac	2013-02-07 21:52:56.146775637 +0800
++++ libpyzy/configure.ac	2013-02-07 23:20:11.130921656 +0800
+@@ -84,7 +84,6 @@
+ 
+ # define PACKAGE_VERSION_* variables
+ AM_SANITY_CHECK
+-AM_DISABLE_STATIC
+ AC_PROG_CC
+ AC_PROG_CXX
+ AM_PROG_CC_C_O

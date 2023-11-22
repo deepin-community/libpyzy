@@ -1,0 +1,32 @@
+Index: libpyzy/data/db/open-phrase/Makefile.am
+===================================================================
+--- libpyzy.orig/data/db/open-phrase/Makefile.am	2013-02-07 23:14:36.754912329 +0800
++++ libpyzy/data/db/open-phrase/Makefile.am	2013-02-07 23:15:09.878913253 +0800
+@@ -27,17 +27,10 @@
+ main_dbdir = $(pkgdatadir)/db
+ 
+ DBVER = 1.0.0
+-DBTAR = pyzy-database-$(DBVER).tar.bz2
+ 
+-$(DBTAR):
++stamp-db:
+ 	$(AM_V_GEN) \
+-	wget http://pyzy.googlecode.com/files/$(DBTAR) || \
+-	( $(RM) $@; exit 1)
+-
+-stamp-db: $(DBTAR)
+-	$(AM_V_GEN) \
+-	tar jxfm $(DBTAR); \
+-	mv db/main.db db/$(db_file); \
++	mkdir -p db; cp -f $(TOPDIR)/db/main.db db/$(db_file); \
+ 	touch $@
+ 
+ $(main_db_DATA): stamp-db
+@@ -49,7 +42,6 @@
+ 	$(NULL)
+ 
+ DISTCLEANFILES = \
+-	$(DBTAR) \
+ 	$(NULL)
+ endif
+ 

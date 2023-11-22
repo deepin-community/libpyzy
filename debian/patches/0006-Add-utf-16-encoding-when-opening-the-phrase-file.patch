@@ -1,0 +1,34 @@
+From: Pugalendhi Ganesan <pugalendhi.ganesan@lge.com>
+Date: Wed, 29 Jul 2020 18:04:48 +0530
+Subject: Add "utf-16" encoding when opening the phrase file
+Forwarded: https://github.com/pyzy/pyzy/pull/4
+
+Signed-off-by: Martin Jansa <martin.jansa@lge.com>
+---
+ data/db/android/create_db.py | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/data/db/android/create_db.py b/data/db/android/create_db.py
+index d6a1a27..f648670 100755
+--- a/data/db/android/create_db.py
++++ b/data/db/android/create_db.py
+@@ -17,8 +17,7 @@ def get_sheng_yun(pinyin):
+     return "", pinyin
+ 
+ def read_phrases(filename):
+-    buf = open(filename, 'r+b').read()
+-    buf = str(buf, "utf16")
++    buf = open(filename,encoding='utf-16').read()
+     buf = buf.strip()
+     for l in buf.split('\n'):
+         hanzi, freq, flag, pinyin = l.split(' ', 3)
+@@ -70,8 +69,7 @@ def create_db(filename):
+             s, y = pinyin_id[s], pinyin_id[y]
+             columns.append(s)
+             columns.append(y)
+-        values = "'%s', %d, %s" % (hanzi.encode("utf8"), freq, ",".join(map(str,columns)))
+-            
++        values = "'%s', %d, %s" % (hanzi, freq, ",".join(map(str,columns)))
+         sql = insert_sql % (len(hanzi) - 1, values)
+         print(sql)
+     print("COMMIT;")
