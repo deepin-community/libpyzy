@@ -1,5 +1,89 @@
-template-repository (1.0-1) unstable; urgency=medium
+libpyzy (1.0.1-8) unstable; urgency=medium
 
-  * Initial release
+  * Team upload.
+  * Bump Standards-Version to 4.6.0.
+  * debian/control: Migrate to python3.
+  * debian/patches: Add upstream proposed patch to migrate to python3.
+    (Closes: #936908)
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Boyuan Yang <byang@debian.org>  Sun, 13 Mar 2022 13:33:27 -0400
+
+libpyzy (1.0.1-7) unstable; urgency=medium
+
+  * Team upload.
+  * debian/control: Bump debhelper compat to v13.
+  * debian/rules:
+    + Drop useless db download instructions, upstream
+      is now dead.
+    + Also explicitly list .la file in debian/not-installed list.
+  * debian/control: Explicitly depends on python2 to meet release
+    requirement of Debian 11.
+
+ -- Boyuan Yang <byang@debian.org>  Fri, 24 Jul 2020 16:14:27 -0400
+
+libpyzy (1.0.1-6) unstable; urgency=medium
+
+  * Team upload.
+  * Apply "wrap-and-sort -abst".
+  * debian/control:
+    + Use debian-input-method mailing list in Maintainer field (Closes: #899792)
+    + Update YunQiang Su's email address and use the @debian.org one.
+    + Bump debhelper compat to v11.
+    + Standards-Version to 4.2.1.
+    + Remove unnesessary build-dependency dh-autoreconf.
+    + Use git repo on Salsa platform for Vcs fields.
+  * debian/rules: Modernize rules file and get rid of dpkg-parsechangelog
+    invocation.
+  * debian/copyright: Use secure uri.
+
+ -- Boyuan Yang <073plan@gmail.com>  Sun, 26 Aug 2018 16:47:11 -0400
+
+libpyzy (1.0.1-5) unstable; urgency=medium
+
+  * Remove opencc support due to lack support of new API
+  * Move pre-depends to ${misc:Pre-Depends}
+  * Ack NMU (Closes: #795602)
+
+ -- Aron Xu <aron@debian.org>  Mon, 08 Aug 2016 16:17:44 +0800
+
+libpyzy (1.0.1-4.1) unstable; urgency=medium
+
+  * Non maintainer-upload.
+
+  [ Steve Langasek ]
+  * Rename library packages for g++5 ABI transition.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sat, 15 Aug 2015 18:09:26 +0200
+
+libpyzy (1.0.1-4) unstable; urgency=medium
+
+  * Update the maintainer to make it part of pkg-ime.
+  * Update uploaders.
+  * Ship database in install. Closes: #737136, #737136
+  * Drop boost-dev since it is not used by ./configure as default.
+  * Lintian override for C++ library symbols.
+
+ -- Osamu Aoki <osamu@debian.org>  Fri, 31 Jan 2014 01:55:12 +0900
+
+libpyzy (1.0.1-3) unstable; urgency=low
+
+  * Disable dpkg-gensymbols as they are so chaos.
+  * Fix gitweb URL.
+
+ -- YunQiang Su <wzssyqa@gmail.com>  Wed, 16 Oct 2013 17:49:20 +0800
+
+libpyzy (1.0.1-2) unstable; urgency=low
+
+  * Use cononical debian git url
+  * Macro PINYIN_ID_* should be char (Closes: #705050)
+  * Update symbols and se c++filter
+      Closes: #713352 #705058
+
+ -- YunQiang Su <wzssyqa@gmail.com>  Fri, 27 Sep 2013 15:57:03 +0800
+
+libpyzy (1.0.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #699902).
+    Use git hash 6d9c3cdff364e0da75e1c26222240f26370ebf73 as 1.0.1.
+
+ -- YunQiang Su <wzssyqa@gmail.com>  Mon, 04 Feb 2013 00:29:11 +0800

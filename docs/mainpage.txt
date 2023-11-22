@@ -1,0 +1,80 @@
+/**
+\mainpage libpyzy - The Chinese PinYin and Bopomofo conversion library.
+
+Sample code
+
+\code
+#include <PyZy/InputContext.h>
+#include <PyZy/Variant.h>
+#include <iostream>
+
+// observer class to get a notification from |InputContext|.
+class SampleObserver : public PyZy::InputContext::Observer {
+public:
+    void commitText (PyZy::InputContext *context,
+                     const std::string &commit_text) {
+        std::cout << "text is commited. [" << commit_text << "]" << std::endl;
+    }
+
+    void inputTextChanged (PyZy::InputContext *context) {
+        std::cout << "input text is changed. [" << context->inputText() << "]"
+                  << std::endl;
+    }
+
+    void preeditTextChanged (PyZy::InputContext *context) {
+        std::cout << "selected text is changed. [" << context->selectedText()
+                  << "]" << std::endl;
+    }
+
+    void auxiliaryTextChanged (PyZy::InputContext *context) {
+        std::cout << "conversion text is changed. ["
+                  << context->conversionText() << "]" << std::endl;
+    }
+
+    void candidatesChanged (PyZy::InputContext *context) {
+        std::cout << "candidates are changed." << std::endl;
+
+        // output first 5 candidates.
+        for (size_t i = 0; i < 5; ++i) {
+            PyZy::Candidate candidate;
+            if (!context->getCandidate(i, candidate)) {
+                break;
+            }
+            std::cout << "  [" << i << "]: " << candidate.text << std::endl;
+        }
+    }
+
+    void cursorChanged (PyZy::InputContext *context) {
+        std::cout << "cursor position is commited. [" << context->cursor()
+                  << "]" << std::endl;
+    }
+};
+
+int main() {
+    PyZy::InputContext::init();
+
+    SampleObserver observer;
+    PyZy::InputContext *context = PyZy::InputContext::create(
+        PyZy::InputContext::FULL_PINYIN, &observer);
+
+    context->setProperty(PyZy::InputContext::PROPERTY_MODE_SIMP,
+                         PyZy::Variant::fromBool (true));
+
+    context->insert('n');
+    context->insert('i');
+    context->insert('h');
+    context->insert('a');
+    context->insert('o');
+
+    if (context->hasCandidate(4)) {
+        context->selectCandidate(4);
+    }
+
+    context->commit(PyZy::InputContext::TYPE_CONVERTED);
+
+    PyZy::InputContext::finalize();
+
+    return 0;
+}
+\endcode
+*/

@@ -1,0 +1,107 @@
+Name:       @PACKAGE_NAME@
+Version:    @PACKAGE_VERSION@
+Release:    1%{?dist}
+Summary:    The Chinese PinYin and Bopomofo conversion library.
+License:    LGPL2.1
+Group:      System Environment/Libraries
+URL:        http://code.google.com/p/pyzy
+Source0:    http://pyzy.googlecode.com/files/%{name}-%{version}.tar.gz
+Source1:    http://pyzy.googlecode.com/files/pyzy-database-1.0.0.tar.bz2
+
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires:  glib2
+BuildRequires:  libtool
+BuildRequires:  pkgconfig
+BuildRequires:  sqlite-devel
+BuildRequires:  libuuid-devel
+
+# Requires(post): sqlite
+
+Requires:   pyzy-db = %{version}-%{release}
+
+%description
+The Chinese Pinyin and Bopomofo conversion library.
+
+%package    devel
+Summary:    Development tools for pyzy
+Group:      Development/Libraries
+Requires:   %{name} = %{version}-%{release}
+Requires:   glib2-devel
+
+%description devel
+The pyzy-devel package contains the header files for pyzy.
+
+%package    db-open-phrase
+Summary:    The open phrase database for pyzy
+Group:      System Environment/Libraries
+BuildArch:  noarch
+Provides:   pyzy-db
+Requires(post): sqlite
+
+%description db-open-phrase
+The phrase database for pyzy from open-phrase project.
+
+%package    db-android
+Summary:    The android phrase database for pyzy
+Group:      System Environment/Libraries
+BuildArch:  noarch
+Provides:   pyzy-db
+Requires(post): sqlite
+
+%description db-android
+The phrase database for pyzy from android project.
+
+%prep
+%setup -q
+
+%build
+%configure --disable-static --enable-db-open-phrase
+# make -C po update-gmo
+make %{?_smp_mflags}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+# make DESTDIR=${RPM_BUILD_ROOT} NO_INDEX=true install
+make DESTDIR=$RPM_BUILD_ROOT install
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post
+# cd %{_datadir}/@PACKAGE@/db
+# sqlite3 android.db ".read create_index.sql"
+
+%post db-open-phrase
+# cd %{_datadir}/@PACKAGE@/db
+# sqlite3 open-phrase.db ".read create_index.sql"
+
+%post db-android
+# cd %{_datadir}/@PACKAGE@/db
+# sqlite3 android.db ".read create_index.sql"
+
+%files
+%defattr(-,root,root,-)
+%doc AUTHORS COPYING README
+%{_libdir}/lib*.so.*
+%{_datadir}/@PACKAGE@/phrases.txt
+%{_datadir}/@PACKAGE@/db/create_index.sql
+%dir %{_datadir}/@PACKAGE@
+%dir %{_datadir}/@PACKAGE@/db
+
+%files devel
+%defattr(-,root,root,-)
+%{_libdir}/lib*.so
+%{_libdir}/pkgconfig/*
+%{_includedir}/*
+
+%files db-open-phrase
+%{_datadir}/@PACKAGE@/db/open-phrase.db
+
+%files db-android
+%{_datadir}/@PACKAGE@/db/android.db
+
+%changelog
+* Fri Aug 08 2008 Peng Huang <shawn.p.huang@gmail.com> - @VERSION@-1
+- The first version.
